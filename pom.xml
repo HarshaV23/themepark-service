@@ -65,6 +65,7 @@
             </plugin>
         </plugins>
         <finalName>themepark-app</finalName>
+
     </build>
 
 </project>

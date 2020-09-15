@@ -1,5 +1,6 @@
 package com.example.themeparkapp.controller;
 
+import com.example.themeparkapp.exceptions.RideNotFoundException;
 import com.example.themeparkapp.model.Themepark;
 import com.example.themeparkapp.service.ThemeparkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,12 @@ public class ThemeparkController {
     }
 
     @GetMapping("/rides/{rideName}")
-    public Optional<Themepark> getRideByName(@PathVariable String rideName){
-        return themeparkService.findByName(rideName);
+    public Optional<Themepark> getRideByName(@PathVariable String rideName) throws RideNotFoundException {
+        Optional<Themepark> o=themeparkService.findByName(rideName);
+        if(o.isPresent()){
+            return themeparkService.findByName(rideName);
+        }
+        throw new RideNotFoundException("The ride "+rideName+" not availble");
     }
 
     @PostMapping("/rides/rating")
